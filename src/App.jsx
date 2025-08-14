@@ -88,14 +88,14 @@ const PRESETS = [
   },
   {
     id: "rhythm",
-    name: "Rhythm",
-    icon: "🥁",
+    name: "Split to Sections",
+    icon: "✂️",
     prompt:
       "Add rhythm to the text by splitting it into short sections separated by empty lines.",
   },
   {
     id: "list",
-    name: "List",
+    name: "Add List",
     icon: "📋",
     prompt: "Create structure with one or more lists.",
   },
@@ -119,6 +119,13 @@ const PRESETS = [
     icon: "👔",
     prompt:
       "Rewrite to sound more professional and polished while keeping it authentic and relatable.",
+  },
+  {
+    id: "professional",
+    name: "Provocate",
+    icon: "🤯",
+    prompt:
+      "Subtly provocate readers to engage by writing falsy or bold statement that people have opinion about.",
   },
   {
     id: "storytelling",
