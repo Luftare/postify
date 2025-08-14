@@ -334,6 +334,8 @@ body {
   flex: 1;
   display: grid;
   grid-template-columns: 1fr 400px;
+  grid-template-rows: min-content;
+  align-items: start;
   gap: 2rem;
   padding: 2rem;
   max-width: 1200px;
