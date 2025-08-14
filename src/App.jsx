@@ -164,6 +164,8 @@ function App() {
   });
   const [showApiInput, setShowApiInput] = useState(false);
   const [lastActionType, setLastActionType] = useState(null); // 'manual' | 'preset' | null
+  const [showCustomPrompt, setShowCustomPrompt] = useState(false);
+  const [customPrompt, setCustomPrompt] = useState("");
 
   // Load history from localStorage on component mount
   useEffect(() => {
@@ -402,6 +404,74 @@ function App() {
     }
   };
 
+  const processWithCustomPrompt = async () => {
+    if (!apiKey) {
+      setShowApiInput(true);
+      return;
+    }
+
+    if (!currentText.trim()) {
+      alert("Please enter some text first!");
+      return;
+    }
+
+    if (!customPrompt.trim()) {
+      alert("Please enter a custom prompt!");
+      return;
+    }
+
+    setIsProcessing(true);
+    setShowCustomPrompt(false);
+
+    try {
+      const response = await fetch(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify({
+            model: "gpt-4o",
+            messages: [
+              {
+                role: "system",
+                content:
+                  "You are a LinkedIn post enhancement expert specializing in professional social media content optimization. Always respond in the exact same language as the input text. Never translate or change the language of the content. You may freely change tone, style, professionalism, and other aspects as requested by the enhancement instructions. Focus on creating content that performs well on LinkedIn's professional networking platform.",
+              },
+              {
+                role: "user",
+                content: `${createBaseInstructions(
+                  currentText
+                )}${customPrompt}\n\nIMPORTANT: Respond in the same language as the input text below. Apply the enhancement while preserving the original language.\n\nOriginal post:\n"${currentText}"\n\nEnhanced post:`,
+              },
+            ],
+            max_tokens: 700,
+            temperature: 0.7,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`OpenAI API error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const processedText = data.choices[0].message.content.trim();
+
+      // Remove quotes if the response is wrapped in them
+      const cleanedText = processedText.replace(/^["']|["']$/g, "");
+
+      addToHistory(cleanedText, "Custom Enhancement");
+    } catch (error) {
+      console.error("Error processing text:", error);
+      alert(`Error: ${error.message}`);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
   return (
     <div className="app">
       <header className="header">
@@ -468,6 +538,44 @@ function App() {
         </div>
       )}
 
+      {showCustomPrompt && (
+        <div className="custom-prompt-modal">
+          <div className="custom-prompt-container">
+            <div className="custom-prompt-header">
+              <h3>🎨 Custom Enhancement Prompt</h3>
+              <button
+                onClick={() => setShowCustomPrompt(false)}
+                className="close-btn"
+              >
+                ✕
+              </button>
+            </div>
+            <textarea
+              value={customPrompt}
+              onChange={(e) => setCustomPrompt(e.target.value)}
+              placeholder="Enter your custom enhancement instructions... (e.g., 'Make it more persuasive and add industry statistics', 'Write in a more technical tone for developers', etc.)"
+              className="custom-prompt-textarea"
+              rows={4}
+            />
+            <div className="custom-prompt-actions">
+              <button
+                onClick={() => setShowCustomPrompt(false)}
+                className="cancel-btn"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={processWithCustomPrompt}
+                disabled={!customPrompt.trim() || isProcessing}
+                className="apply-btn"
+              >
+                {isProcessing ? "Processing..." : "Apply Enhancement"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <main className="main-content">
         <div className="editor-section">
           <div className="textarea-container">
@@ -515,6 +623,14 @@ function App() {
                   <span className="preset-name">{preset.name}</span>
                 </button>
               ))}
+              <button
+                onClick={() => setShowCustomPrompt(true)}
+                disabled={isProcessing || !currentText.trim()}
+                className="preset-btn custom-preset-btn"
+              >
+                <span className="preset-icon">🎨</span>
+                <span className="preset-name">Custom Prompt</span>
+              </button>
             </div>
             {isProcessing && (
               <div className="processing-indicator">
