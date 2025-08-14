@@ -413,7 +413,14 @@ function App() {
         </div>
 
         <aside className="presets-section">
-          <h3>✨ Enhancement Tools</h3>
+          <div className="presets-header">
+            <h3>✨ Enhancement Tools</h3>
+            {isProcessing && (
+              <div className="processing-indicator-inline">
+                <div className="spinner"></div>
+              </div>
+            )}
+          </div>
           <div className="presets-grid">
             {PRESETS.map((preset) => (
               <button
@@ -435,12 +442,6 @@ function App() {
               <span className="preset-name">Custom</span>
             </button>
           </div>
-          {isProcessing && (
-            <div className="processing-indicator">
-              <div className="spinner"></div>
-              <span>Processing your post...</span>
-            </div>
-          )}
           <div className="actions-section">
             <button
               className="new-session-btn"
