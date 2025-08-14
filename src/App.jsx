@@ -257,13 +257,6 @@ function App() {
         </div>
         <div className="api-key-controls">
           <button
-            className="new-session-btn"
-            onClick={startNewSession}
-            title="Start a new session (clears all history)"
-          >
-            📄 New
-          </button>
-          <button
             className="api-key-btn"
             onClick={() => setShowApiInput(!showApiInput)}
           >
@@ -448,6 +441,15 @@ function App() {
               <span>Processing your post...</span>
             </div>
           )}
+          <div className="actions-section">
+            <button
+              className="new-session-btn"
+              onClick={startNewSession}
+              title="Start a new session (clears all history)"
+            >
+              📄 New
+            </button>
+          </div>
         </aside>
       </main>
     </div>

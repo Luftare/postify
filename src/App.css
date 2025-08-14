@@ -520,6 +520,39 @@ body {
   color: #856404;
 }
 
+/* Actions Section */
+.actions-section {
+  margin-top: 1.5rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: center;
+}
+
+.actions-section .new-session-btn {
+  background: #057642;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 24px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 4px rgba(5, 118, 66, 0.15);
+  width: 100%;
+  justify-content: center;
+}
+
+.actions-section .new-session-btn:hover {
+  background: #046139;
+  box-shadow: 0 3px 8px rgba(5, 118, 66, 0.25);
+  transform: translateY(-1px);
+}
+
 .spinner {
   width: 20px;
   height: 20px;
