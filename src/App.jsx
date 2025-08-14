@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import "./App.css";
 
 const PRESETS = [
@@ -51,9 +51,39 @@ function App() {
   const [history, setHistory] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [apiKey, setApiKey] = useState("");
+  const [apiKey, setApiKey] = useState(() => {
+    try {
+      return localStorage.getItem("postify_openai_key") || "";
+    } catch (error) {
+      console.warn("Failed to load API key from localStorage:", error);
+      return "";
+    }
+  });
   const [showApiInput, setShowApiInput] = useState(false);
   const [lastActionType, setLastActionType] = useState(null); // 'manual' | 'preset' | null
+
+  // Save API key to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      if (apiKey) {
+        localStorage.setItem("postify_openai_key", apiKey);
+      } else {
+        localStorage.removeItem("postify_openai_key");
+      }
+    } catch (error) {
+      console.warn("Failed to save API key to localStorage:", error);
+    }
+  }, [apiKey]);
+
+  // Helper function to clear the stored API key
+  const clearApiKey = useCallback(() => {
+    setApiKey("");
+    try {
+      localStorage.removeItem("postify_openai_key");
+    } catch (error) {
+      console.warn("Failed to clear API key from localStorage:", error);
+    }
+  }, []);
 
   const addToHistory = useCallback(
     (newText, description, actionType = "preset") => {
@@ -199,12 +229,23 @@ function App() {
       <header className="header">
         <h1>📝 Postify</h1>
         <p>Optimize your LinkedIn posts for maximum engagement</p>
-        <button
-          className="api-key-btn"
-          onClick={() => setShowApiInput(!showApiInput)}
-        >
-          {apiKey ? "🔑 API Connected" : "🔑 Set API Key"}
-        </button>
+        <div className="api-key-controls">
+          <button
+            className="api-key-btn"
+            onClick={() => setShowApiInput(!showApiInput)}
+          >
+            {apiKey ? "🔑 API Connected" : "🔑 Set API Key"}
+          </button>
+          {apiKey && (
+            <button
+              className="api-clear-btn"
+              onClick={clearApiKey}
+              title="Clear stored API key"
+            >
+              🗑️
+            </button>
+          )}
+        </div>
       </header>
 
       {showApiInput && (
@@ -233,6 +274,11 @@ function App() {
             >
               OpenAI Platform
             </a>
+            <br />
+            <small>
+              ✓ Your API key is stored securely in your browser and never leaves
+              your device
+            </small>
           </p>
         </div>
       )}

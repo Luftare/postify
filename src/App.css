@@ -50,6 +50,13 @@ body {
   margin-bottom: 1rem;
 }
 
+.api-key-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
 .api-key-btn {
   background: #667eea;
   color: white;
@@ -66,6 +73,29 @@ body {
   background: #5a67d8;
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.api-clear-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 50%;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(239, 68, 68, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 45px;
+  height: 45px;
+}
+
+.api-clear-btn:hover {
+  background: #dc2626;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
 }
 
 /* API Input Section */
@@ -116,6 +146,7 @@ body {
   text-align: center;
   margin-top: 1rem;
   color: #6b7280;
+  line-height: 1.5;
 }
 
 .api-help a {
@@ -125,6 +156,11 @@ body {
 
 .api-help a:hover {
   text-decoration: underline;
+}
+
+.api-help small {
+  color: #10b981;
+  font-weight: 500;
 }
 
 /* Main Content */
