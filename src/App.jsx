@@ -51,6 +51,7 @@ const createBaseInstructions = (inputText) => {
     return `You are a LinkedIn post enhancement expert specializing in optimizing professional social media content for maximum engagement and impact.
 
 CRITICAL INSTRUCTION: The input text is written in a non-English language. You MUST respond in the EXACT SAME LANGUAGE as the input text. Do NOT translate or change the language of the response in any way.
+CRITICAL INSTRUCTION: Never use dash (–) in your response. Instead split the sentence or use a comma.
 
 Your task is to enhance the given LinkedIn post while:
 1. PRESERVING the original language completely
@@ -86,10 +87,24 @@ const PRESETS = [
     prompt: "Add appropriate emojis to make the content more engaging.",
   },
   {
+    id: "rhythm",
+    name: "Rhythm",
+    icon: "🥁",
+    prompt:
+      "Add rhythm to the text by splitting it into short sections separated by empty lines.",
+  },
+  {
+    id: "list",
+    name: "List",
+    icon: "📋",
+    prompt: "Create structure with one or more lists.",
+  },
+
+  {
     id: "clarity",
     name: "100% Clarity",
     icon: "💡",
-    prompt: "Rewrite for maximum clarity and readability.",
+    prompt: "Rewrite the text in a 10x more clear and understandable way.",
   },
   {
     id: "engagement",
@@ -280,7 +295,7 @@ function App() {
             Authorization: `Bearer ${apiKey}`,
           },
           body: JSON.stringify({
-            model: "gpt-3.5-turbo",
+            model: "gpt-4o",
             messages: [
               {
                 role: "system",
@@ -294,7 +309,7 @@ function App() {
                 }\n\nIMPORTANT: Respond in the same language as the input text below. Apply the enhancement while preserving the original language.\n\nOriginal post:\n"${currentText}"\n\nEnhanced post:`,
               },
             ],
-            max_tokens: 500,
+            max_tokens: 700,
             temperature: 0.7,
           }),
         }
