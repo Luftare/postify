@@ -117,13 +117,14 @@ function App() {
   }, []);
 
   const addToHistory = useCallback(
-    (newText, description, actionType = "preset") => {
+    (newText, description, actionType = "preset", icon = null) => {
       const newHistoryItem = {
         id: Date.now(),
         text: newText,
         description,
         timestamp: new Date().toLocaleTimeString(),
         type: actionType,
+        icon: icon,
       };
 
       setHistory((prev) => {
@@ -215,7 +216,7 @@ function App() {
         preset,
       });
 
-      addToHistory(cleanedText, preset.name);
+      addToHistory(cleanedText, preset.name, "preset", preset.icon);
     } catch (error) {
       console.error("Error processing text:", error);
       alert(`Error: ${error.message}`);
@@ -240,7 +241,7 @@ function App() {
         customPrompt,
       });
 
-      addToHistory(cleanedText, "Custom Enhancement");
+      addToHistory(cleanedText, "Custom Enhancement", "preset", "🎨");
     } catch (error) {
       console.error("Error processing text:", error);
       alert(`Error: ${error.message}`);
@@ -421,14 +422,12 @@ function App() {
                     >
                       <div className="history-header">
                         <span className="history-description">
-                          {item.type === "manual" ? "✏️ " : "🤖 "}
+                          {item.type === "manual"
+                            ? "✏️ "
+                            : (item.icon || "✨") + " "}
                           {item.description}
                         </span>
                         <span className="history-time">{item.timestamp}</span>
-                      </div>
-                      <div className="history-preview">
-                        {item.text.substring(0, 100)}
-                        {item.text.length > 100 ? "..." : ""}
                       </div>
                     </div>
                   ))}
