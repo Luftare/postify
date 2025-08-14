@@ -236,7 +236,7 @@ body {
 
 .custom-prompt-textarea {
   width: 100%;
-  min-height: 120px;
+  min-height: 500px;
   border: 1px solid #bbbaba;
   border-radius: 4px;
   padding: 1rem;

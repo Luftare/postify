@@ -23,7 +23,6 @@ function App() {
   const [lastActionType, setLastActionType] = useState(null); // 'manual' | 'preset' | null
   const [showCustomPrompt, setShowCustomPrompt] = useState(false);
   const [customPrompt, setCustomPrompt] = useState("");
-  const [showHistory, setShowHistory] = useState(false);
 
   // Load history from localStorage on component mount
   useEffect(() => {
@@ -255,7 +254,6 @@ function App() {
       <header className="header">
         <div>
           <h1>📝 Postify</h1>
-          <p>Optimize your LinkedIn posts for maximum engagement</p>
         </div>
         <div className="api-key-controls">
           <button
@@ -359,19 +357,12 @@ function App() {
       <main className="main-content">
         <div className="editor-section">
           <div className="textarea-container">
-            <div className="post-composer-header">
-              <div className="user-avatar">P</div>
-              <div className="user-info">
-                <h4>Post Editor</h4>
-                <p>Enhance your LinkedIn posts</p>
-              </div>
-            </div>
             <textarea
               value={currentText}
               onChange={(e) => handleTextChange(e.target.value)}
               placeholder="What do you want to talk about?"
               className="post-textarea"
-              rows={8}
+              rows={16}
             />
             <div className="controls">
               <button
@@ -390,51 +381,42 @@ function App() {
               >
                 ↷ Redo
               </button>
-              <button
-                onClick={() => setShowHistory(!showHistory)}
-                className="control-btn"
-                title={showHistory ? "Hide History" : "Show History"}
-              >
-                {showHistory ? "📝 Hide History" : "📝 Show History"}
-              </button>
               <span className="word-count">
                 {currentText.length} characters
               </span>
             </div>
           </div>
 
-          {showHistory && (
-            <div className="history-section">
-              <h3>📝 Post History</h3>
-              {history.length === 0 ? (
-                <p className="empty-history">
-                  Start typing to see your change history
-                </p>
-              ) : (
-                <div className="history-list">
-                  {history.map((item, index) => (
-                    <div
-                      key={item.id}
-                      onClick={() => goToHistoryItem(index)}
-                      className={`history-item ${
-                        index === currentIndex ? "active" : ""
-                      }`}
-                    >
-                      <div className="history-header">
-                        <span className="history-description">
-                          {item.type === "manual"
-                            ? "✏️ "
-                            : (item.icon || "✨") + " "}
-                          {item.description}
-                        </span>
-                        <span className="history-time">{item.timestamp}</span>
-                      </div>
+          <div className="history-section">
+            <h3>📝 Post History</h3>
+            {history.length === 0 ? (
+              <p className="empty-history">
+                Start typing to see your change history
+              </p>
+            ) : (
+              <div className="history-list">
+                {history.map((item, index) => (
+                  <div
+                    key={item.id}
+                    onClick={() => goToHistoryItem(index)}
+                    className={`history-item ${
+                      index === currentIndex ? "active" : ""
+                    }`}
+                  >
+                    <div className="history-header">
+                      <span className="history-description">
+                        {item.type === "manual"
+                          ? "✏️ "
+                          : (item.icon || "✨") + " "}
+                        {item.description}
+                      </span>
+                      <span className="history-time">{item.timestamp}</span>
                     </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         <aside className="presets-section">
