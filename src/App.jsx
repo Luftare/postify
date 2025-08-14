@@ -1,160 +1,10 @@
 import { useState, useCallback, useEffect } from "react";
 import "./App.css";
-
-// Helper function to detect if text is primarily non-English
-const detectLanguage = (text) => {
-  const sample = text.trim().substring(0, 300).toLowerCase();
-
-  // Enhanced heuristics for common non-English patterns
-  const patterns = {
-    // European languages with accents
-    european: /[àáâãäåæçèéêëìíîïñòóôõöøùúûüýÿ]/,
-    // Cyrillic (Russian, Ukrainian, Bulgarian, etc.)
-    cyrillic: /[а-яёђѓєіїјљњћџ]/,
-    // Chinese/Japanese/Korean
-    cjk: /[\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff\uac00-\ud7af]/,
-    // Arabic
-    arabic: /[\u0600-\u06ff]/,
-    // Hindi/Devanagari
-    devanagari: /[\u0900-\u097f]/,
-    // Thai
-    thai: /[\u0e00-\u0e7f]/,
-    // Hebrew
-    hebrew: /[\u0590-\u05ff]/,
-    // Greek
-    greek: /[\u0370-\u03ff]/,
-    // Turkish specific characters
-    turkish: /[çğıöşü]/,
-    // Portuguese/Spanish specific patterns
-    iberian: /[ñáéíóúü]/,
-  };
-
-  // Count non-English character occurrences
-  let nonEnglishScore = 0;
-  for (const [lang, pattern] of Object.entries(patterns)) {
-    const matches = sample.match(pattern);
-    if (matches) {
-      nonEnglishScore += matches.length;
-    }
-  }
-
-  // If more than 2 non-English characters found, likely non-English
-  return nonEnglishScore > 2 ? "non-english" : "unknown";
-};
-
-// Create dynamic base instructions based on detected language
-const createBaseInstructions = (inputText) => {
-  const detectedLang = detectLanguage(inputText);
-  const isNonEnglish = detectedLang === "non-english";
-
-  if (isNonEnglish) {
-    return `You are a LinkedIn post enhancement expert specializing in optimizing professional social media content for maximum engagement and impact.
-
-CRITICAL INSTRUCTION: The input text is written in a non-English language. You MUST respond in the EXACT SAME LANGUAGE as the input text. Do NOT translate or change the language of the response in any way.
-CRITICAL INSTRUCTION: Never use dash (–) in your response. Instead split the sentence or use a comma.
-
-Your task is to enhance the given LinkedIn post while:
-1. PRESERVING the original language completely
-2. Maintaining professional LinkedIn standards and best practices
-3. Applying the specific enhancement instructions below (which may change tone, style, professionalism, etc.)
-
-Enhancement instructions:
-
-`;
-  } else {
-    return `You are a LinkedIn post enhancement expert specializing in optimizing professional social media content for maximum engagement and impact.
-
-Your task is to enhance the given LinkedIn post according to the specific instructions below. You may change tone, style, professionalism, and other aspects as requested while maintaining LinkedIn's professional standards.
-
-Enhancement instructions:
-
-`;
-  }
-};
-
-const PRESETS = [
-  {
-    id: "grammar",
-    name: "Fix Grammar",
-    icon: "✏️",
-    prompt:
-      "Fix any grammar, spelling, and punctuation errors while keeping the original meaning intact.",
-  },
-  {
-    id: "emojis",
-    name: "Add Emojis",
-    icon: "😊",
-    prompt: "Add appropriate emojis to make the content more engaging.",
-  },
-  {
-    id: "rhythm",
-    name: "Split to Sections",
-    icon: "✂️",
-    prompt:
-      "Add rhythm to the text by splitting it into short sections separated by empty lines.",
-  },
-  {
-    id: "list",
-    name: "Add List",
-    icon: "📋",
-    prompt: "Create structure with one or more lists.",
-  },
-
-  {
-    id: "clarity",
-    name: "100% Clarity",
-    icon: "💡",
-    prompt: "Rewrite the text in a 10x more clear and understandable way.",
-  },
-  {
-    id: "engagement",
-    name: "Boost Engagement",
-    icon: "🚀",
-    prompt:
-      "Rewrite to maximize engagement by making it more compelling, actionable, and conversation-starting.",
-  },
-  {
-    id: "professional",
-    name: "More Professional",
-    icon: "👔",
-    prompt:
-      "Rewrite to sound more professional and polished while keeping it authentic and relatable.",
-  },
-  {
-    id: "professional",
-    name: "Provocate",
-    icon: "🤯",
-    prompt:
-      "Subtly provocate readers to engage by writing falsy or bold statement that people have opinion about.",
-  },
-  {
-    id: "storytelling",
-    name: "Add Storytelling",
-    icon: "📖",
-    prompt:
-      "Transform into a compelling story that engages readers emotionally and creates a narrative arc.",
-  },
-  {
-    id: "casual",
-    name: "More Casual",
-    icon: "😎",
-    prompt: "Rewrite to sound more casual, conversational, and approachable.",
-  },
-  {
-    id: "thought_leader",
-    name: "Thought Leadership",
-    icon: "🧠",
-    prompt:
-      "Rewrite to position as thought leadership content with industry insights and forward-thinking perspectives.",
-  },
-  {
-    id: "actionable",
-    name: "Add Call-to-Action",
-    icon: "👉",
-    prompt:
-      "Add clear, compelling calls-to-action that encourage engagement, comments, or specific actions from readers.",
-  },
-];
+import { PRESETS } from "./data/presets";
+import {
+  processWithPreset as processWithPresetAPI,
+  processWithCustomPrompt as processWithCustomPromptAPI,
+} from "./services/apiService";
 
 function App() {
   const [currentText, setCurrentText] = useState("");
@@ -355,52 +205,14 @@ function App() {
       return;
     }
 
-    if (!currentText.trim()) {
-      alert("Please enter some text first!");
-      return;
-    }
-
     setIsProcessing(true);
 
     try {
-      const response = await fetch(
-        "https://api.openai.com/v1/chat/completions",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${apiKey}`,
-          },
-          body: JSON.stringify({
-            model: "gpt-4o",
-            messages: [
-              {
-                role: "system",
-                content:
-                  "You are a LinkedIn post enhancement expert specializing in professional social media content optimization. Always respond in the exact same language as the input text. Never translate or change the language of the content. You may freely change tone, style, professionalism, and other aspects as requested by the enhancement instructions. Focus on creating content that performs well on LinkedIn's professional networking platform.",
-              },
-              {
-                role: "user",
-                content: `${createBaseInstructions(currentText)}${
-                  preset.prompt
-                }\n\nIMPORTANT: Respond in the same language as the input text below. Apply the enhancement while preserving the original language.\n\nOriginal post:\n"${currentText}"\n\nEnhanced post:`,
-              },
-            ],
-            max_tokens: 700,
-            temperature: 0.7,
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`OpenAI API error: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const processedText = data.choices[0].message.content.trim();
-
-      // Remove quotes if the response is wrapped in them
-      const cleanedText = processedText.replace(/^["']|["']$/g, "");
+      const cleanedText = await processWithPresetAPI({
+        apiKey,
+        currentText,
+        preset,
+      });
 
       addToHistory(cleanedText, preset.name);
     } catch (error) {
@@ -417,58 +229,15 @@ function App() {
       return;
     }
 
-    if (!currentText.trim()) {
-      alert("Please enter some text first!");
-      return;
-    }
-
-    if (!customPrompt.trim()) {
-      alert("Please enter a custom prompt!");
-      return;
-    }
-
     setIsProcessing(true);
     setShowCustomPrompt(false);
 
     try {
-      const response = await fetch(
-        "https://api.openai.com/v1/chat/completions",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${apiKey}`,
-          },
-          body: JSON.stringify({
-            model: "gpt-4o",
-            messages: [
-              {
-                role: "system",
-                content:
-                  "You are a LinkedIn post enhancement expert specializing in professional social media content optimization. Always respond in the exact same language as the input text. Never translate or change the language of the content. You may freely change tone, style, professionalism, and other aspects as requested by the enhancement instructions. Focus on creating content that performs well on LinkedIn's professional networking platform.",
-              },
-              {
-                role: "user",
-                content: `${createBaseInstructions(
-                  currentText
-                )}${customPrompt}\n\nIMPORTANT: Respond in the same language as the input text below. Apply the enhancement while preserving the original language.\n\nOriginal post:\n"${currentText}"\n\nEnhanced post:`,
-              },
-            ],
-            max_tokens: 700,
-            temperature: 0.7,
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`OpenAI API error: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const processedText = data.choices[0].message.content.trim();
-
-      // Remove quotes if the response is wrapped in them
-      const cleanedText = processedText.replace(/^["']|["']$/g, "");
+      const cleanedText = await processWithCustomPromptAPI({
+        apiKey,
+        currentText,
+        customPrompt,
+      });
 
       addToHistory(cleanedText, "Custom Enhancement");
     } catch (error) {
