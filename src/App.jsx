@@ -251,8 +251,10 @@ function App() {
   return (
     <div className="app">
       <header className="header">
-        <h1>📝 Postify</h1>
-        <p>Optimize your LinkedIn posts for maximum engagement</p>
+        <div>
+          <h1>📝 Postify</h1>
+          <p>Optimize your LinkedIn posts for maximum engagement</p>
+        </div>
         <div className="api-key-controls">
           <button
             className="new-session-btn"
@@ -355,10 +357,17 @@ function App() {
       <main className="main-content">
         <div className="editor-section">
           <div className="textarea-container">
+            <div className="post-composer-header">
+              <div className="user-avatar">P</div>
+              <div className="user-info">
+                <h4>Post Editor</h4>
+                <p>Enhance your LinkedIn posts</p>
+              </div>
+            </div>
             <textarea
               value={currentText}
               onChange={(e) => handleTextChange(e.target.value)}
-              placeholder="Write your LinkedIn post here..."
+              placeholder="What do you want to talk about?"
               className="post-textarea"
               rows={8}
             />
@@ -386,7 +395,7 @@ function App() {
           </div>
 
           <div className="presets-section">
-            <h3>✨ Enhancement Presets</h3>
+            <h3>🚀 Post Enhancement Tools</h3>
             <div className="presets-grid">
               {PRESETS.map((preset) => (
                 <button
@@ -405,7 +414,7 @@ function App() {
                 className="preset-btn custom-preset-btn"
               >
                 <span className="preset-icon">🎨</span>
-                <span className="preset-name">Custom Prompt</span>
+                <span className="preset-name">Custom Enhancement</span>
               </button>
             </div>
             {isProcessing && (
@@ -418,7 +427,7 @@ function App() {
         </div>
 
         <aside className="history-section">
-          <h3>📚 Change History</h3>
+          <h3>📝 Post History</h3>
           {history.length === 0 ? (
             <p className="empty-history">
               Start typing to see your change history
