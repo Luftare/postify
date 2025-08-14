@@ -394,67 +394,67 @@ function App() {
             </div>
           </div>
 
-          <div className="presets-section">
-            <h3>🚀 Post Enhancement Tools</h3>
-            <div className="presets-grid">
-              {PRESETS.map((preset) => (
-                <button
-                  key={preset.id}
-                  onClick={() => processWithPreset(preset)}
-                  disabled={isProcessing || !currentText.trim()}
-                  className="preset-btn"
-                >
-                  <span className="preset-icon">{preset.icon}</span>
-                  <span className="preset-name">{preset.name}</span>
-                </button>
-              ))}
-              <button
-                onClick={() => setShowCustomPrompt(true)}
-                disabled={isProcessing || !currentText.trim()}
-                className="preset-btn custom-preset-btn"
-              >
-                <span className="preset-icon">🎨</span>
-                <span className="preset-name">Custom Enhancement</span>
-              </button>
-            </div>
-            {isProcessing && (
-              <div className="processing-indicator">
-                <div className="spinner"></div>
-                <span>Processing your post...</span>
+          <div className="history-section">
+            <h3>📝 Post History</h3>
+            {history.length === 0 ? (
+              <p className="empty-history">
+                Start typing to see your change history
+              </p>
+            ) : (
+              <div className="history-list">
+                {history.map((item, index) => (
+                  <div
+                    key={item.id}
+                    onClick={() => goToHistoryItem(index)}
+                    className={`history-item ${
+                      index === currentIndex ? "active" : ""
+                    }`}
+                  >
+                    <div className="history-header">
+                      <span className="history-description">
+                        {item.type === "manual" ? "✏️ " : "🤖 "}
+                        {item.description}
+                      </span>
+                      <span className="history-time">{item.timestamp}</span>
+                    </div>
+                    <div className="history-preview">
+                      {item.text.substring(0, 100)}
+                      {item.text.length > 100 ? "..." : ""}
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
           </div>
         </div>
 
-        <aside className="history-section">
-          <h3>📝 Post History</h3>
-          {history.length === 0 ? (
-            <p className="empty-history">
-              Start typing to see your change history
-            </p>
-          ) : (
-            <div className="history-list">
-              {history.map((item, index) => (
-                <div
-                  key={item.id}
-                  onClick={() => goToHistoryItem(index)}
-                  className={`history-item ${
-                    index === currentIndex ? "active" : ""
-                  }`}
-                >
-                  <div className="history-header">
-                    <span className="history-description">
-                      {item.type === "manual" ? "✏️ " : "🤖 "}
-                      {item.description}
-                    </span>
-                    <span className="history-time">{item.timestamp}</span>
-                  </div>
-                  <div className="history-preview">
-                    {item.text.substring(0, 100)}
-                    {item.text.length > 100 ? "..." : ""}
-                  </div>
-                </div>
-              ))}
+        <aside className="presets-section">
+          <h3>✨ Enhancement Tools</h3>
+          <div className="presets-grid">
+            {PRESETS.map((preset) => (
+              <button
+                key={preset.id}
+                onClick={() => processWithPreset(preset)}
+                disabled={isProcessing || !currentText.trim()}
+                className="preset-btn"
+              >
+                <span className="preset-icon">{preset.icon}</span>
+                <span className="preset-name">{preset.name}</span>
+              </button>
+            ))}
+            <button
+              onClick={() => setShowCustomPrompt(true)}
+              disabled={isProcessing || !currentText.trim()}
+              className="preset-btn custom-preset-btn"
+            >
+              <span className="preset-icon">🎨</span>
+              <span className="preset-name">Custom</span>
+            </button>
+          </div>
+          {isProcessing && (
+            <div className="processing-indicator">
+              <div className="spinner"></div>
+              <span>Processing your post...</span>
             </div>
           )}
         </aside>
