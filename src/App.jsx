@@ -165,6 +165,58 @@ function App() {
   const [showApiInput, setShowApiInput] = useState(false);
   const [lastActionType, setLastActionType] = useState(null); // 'manual' | 'preset' | null
 
+  // Load history from localStorage on component mount
+  useEffect(() => {
+    try {
+      const savedHistory = localStorage.getItem("postify_history");
+      const savedCurrentIndex = localStorage.getItem("postify_current_index");
+      const savedCurrentText = localStorage.getItem("postify_current_text");
+      const savedLastActionType = localStorage.getItem(
+        "postify_last_action_type"
+      );
+
+      if (savedHistory) {
+        const parsedHistory = JSON.parse(savedHistory);
+        setHistory(parsedHistory);
+
+        if (savedCurrentIndex !== null) {
+          const index = parseInt(savedCurrentIndex, 10);
+          setCurrentIndex(index);
+        }
+
+        if (savedCurrentText) {
+          setCurrentText(savedCurrentText);
+        }
+
+        if (savedLastActionType) {
+          setLastActionType(savedLastActionType);
+        }
+      }
+    } catch (error) {
+      console.warn("Failed to load history from localStorage:", error);
+    }
+  }, []);
+
+  // Save history to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      if (history.length > 0) {
+        localStorage.setItem("postify_history", JSON.stringify(history));
+        localStorage.setItem("postify_current_index", currentIndex.toString());
+        localStorage.setItem("postify_current_text", currentText);
+        localStorage.setItem("postify_last_action_type", lastActionType || "");
+      } else {
+        // Clear localStorage when history is empty
+        localStorage.removeItem("postify_history");
+        localStorage.removeItem("postify_current_index");
+        localStorage.removeItem("postify_current_text");
+        localStorage.removeItem("postify_last_action_type");
+      }
+    } catch (error) {
+      console.warn("Failed to save history to localStorage:", error);
+    }
+  }, [history, currentIndex, currentText, lastActionType]);
+
   // Save API key to localStorage whenever it changes
   useEffect(() => {
     try {
@@ -185,6 +237,22 @@ function App() {
       localStorage.removeItem("postify_openai_key");
     } catch (error) {
       console.warn("Failed to clear API key from localStorage:", error);
+    }
+  }, []);
+
+  // Helper function to start a new session (clear everything)
+  const startNewSession = useCallback(() => {
+    setCurrentText("");
+    setHistory([]);
+    setCurrentIndex(-1);
+    setLastActionType(null);
+    try {
+      localStorage.removeItem("postify_history");
+      localStorage.removeItem("postify_current_index");
+      localStorage.removeItem("postify_current_text");
+      localStorage.removeItem("postify_last_action_type");
+    } catch (error) {
+      console.warn("Failed to clear history from localStorage:", error);
     }
   }, []);
 
@@ -340,6 +408,13 @@ function App() {
         <h1>📝 Postify</h1>
         <p>Optimize your LinkedIn posts for maximum engagement</p>
         <div className="api-key-controls">
+          <button
+            className="new-session-btn"
+            onClick={startNewSession}
+            title="Start a new session (clears all history)"
+          >
+            📄 New
+          </button>
           <button
             className="api-key-btn"
             onClick={() => setShowApiInput(!showApiInput)}

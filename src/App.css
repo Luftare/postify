@@ -95,6 +95,25 @@ body {
   box-shadow: 0 3px 12px rgba(239, 68, 68, 0.3);
 }
 
+.new-session-btn {
+  background: #10b981;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
+}
+
+.new-session-btn:hover {
+  background: #059669;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 12px rgba(16, 185, 129, 0.3);
+}
+
 /* API Input Section */
 .api-input-section {
   background: rgba(255, 255, 255, 0.95);
