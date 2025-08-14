@@ -23,6 +23,7 @@ function App() {
   const [lastActionType, setLastActionType] = useState(null); // 'manual' | 'preset' | null
   const [showCustomPrompt, setShowCustomPrompt] = useState(false);
   const [customPrompt, setCustomPrompt] = useState("");
+  const [showHistory, setShowHistory] = useState(false);
 
   // Load history from localStorage on component mount
   useEffect(() => {
@@ -388,44 +389,53 @@ function App() {
               >
                 ↷ Redo
               </button>
+              <button
+                onClick={() => setShowHistory(!showHistory)}
+                className="control-btn"
+                title={showHistory ? "Hide History" : "Show History"}
+              >
+                {showHistory ? "📝 Hide History" : "📝 Show History"}
+              </button>
               <span className="word-count">
                 {currentText.length} characters
               </span>
             </div>
           </div>
 
-          <div className="history-section">
-            <h3>📝 Post History</h3>
-            {history.length === 0 ? (
-              <p className="empty-history">
-                Start typing to see your change history
-              </p>
-            ) : (
-              <div className="history-list">
-                {history.map((item, index) => (
-                  <div
-                    key={item.id}
-                    onClick={() => goToHistoryItem(index)}
-                    className={`history-item ${
-                      index === currentIndex ? "active" : ""
-                    }`}
-                  >
-                    <div className="history-header">
-                      <span className="history-description">
-                        {item.type === "manual" ? "✏️ " : "🤖 "}
-                        {item.description}
-                      </span>
-                      <span className="history-time">{item.timestamp}</span>
+          {showHistory && (
+            <div className="history-section">
+              <h3>📝 Post History</h3>
+              {history.length === 0 ? (
+                <p className="empty-history">
+                  Start typing to see your change history
+                </p>
+              ) : (
+                <div className="history-list">
+                  {history.map((item, index) => (
+                    <div
+                      key={item.id}
+                      onClick={() => goToHistoryItem(index)}
+                      className={`history-item ${
+                        index === currentIndex ? "active" : ""
+                      }`}
+                    >
+                      <div className="history-header">
+                        <span className="history-description">
+                          {item.type === "manual" ? "✏️ " : "🤖 "}
+                          {item.description}
+                        </span>
+                        <span className="history-time">{item.timestamp}</span>
+                      </div>
+                      <div className="history-preview">
+                        {item.text.substring(0, 100)}
+                        {item.text.length > 100 ? "..." : ""}
+                      </div>
                     </div>
-                    <div className="history-preview">
-                      {item.text.substring(0, 100)}
-                      {item.text.length > 100 ? "..." : ""}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         <aside className="presets-section">
