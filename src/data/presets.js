@@ -1,5 +1,12 @@
 export const PRESETS = [
   {
+    id: "hook",
+    name: "Add Hook",
+    icon: "🚨",
+    prompt:
+      "Improve the beginning of the text by adding a hook to drive engagements. Be creative about it.",
+  },
+  {
     id: "storytelling",
     name: "Add Storytelling",
     icon: "📖",
@@ -46,20 +53,26 @@ export const PRESETS = [
     prompt:
       "Improve to maximize engagement by making it more compelling, actionable, and conversation-starting.",
   },
-
-  {
-    id: "thought_leader",
-    name: "Thought Leadership",
-    icon: "🧠",
-    prompt:
-      "Rewrite to position as thought leadership content with industry insights and forward-thinking perspectives.",
-  },
+  // {
+  //   id: "thought_leader",
+  //   name: "Thought Leadership",
+  //   icon: "🧠",
+  //   prompt:
+  //     "Rewrite to position as thought leadership content with industry insights and forward-thinking perspectives.",
+  // },
   {
     id: "provocate",
     name: "Provocate",
     icon: "🤯",
     prompt:
       "Provocate readers to engage with falsy or bold statement that people have a strong opinion about.",
+  },
+  {
+    id: "creativity",
+    name: "Reimagine",
+    icon: "🧑‍🎨",
+    prompt:
+      "Rewrite the text completely with a different angle. Keep the essence but put it in a whole new package that looks very different in all possible ways. Think outside the box. Be 1000x more creative.",
   },
   {
     id: "shorten",

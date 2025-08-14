@@ -58,27 +58,34 @@ body {
 }
 
 .api-key-btn {
-  background: #0a66c2;
-  color: white;
-  border: none;
+  background: #ffffff;
+  color: #0a66c2;
+  border: 1px solid #e0e0e0;
   padding: 0.5rem 1rem;
-  border-radius: 24px;
+  border-radius: 6px;
   font-weight: 500;
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .api-key-btn:hover {
-  background: #004182;
+  background: #f3f2ef;
+  border-color: #0a66c2;
+  box-shadow: 0 2px 8px rgba(10, 102, 194, 0.15);
+  transform: translateY(-1px);
 }
 
 .api-clear-btn {
-  background: #d11124;
-  color: white;
-  border: none;
+  background: #ffffff;
+  color: #d11124;
+  border: 1px solid #e0e0e0;
   padding: 0.5rem;
-  border-radius: 50%;
+  border-radius: 6px;
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -87,26 +94,37 @@ body {
   justify-content: center;
   min-width: 36px;
   height: 36px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .api-clear-btn:hover {
-  background: #a61e2a;
+  background: #fef2f2;
+  border-color: #d11124;
+  box-shadow: 0 2px 8px rgba(209, 17, 36, 0.15);
+  transform: translateY(-1px);
 }
 
 .new-session-btn {
-  background: #057642;
-  color: white;
-  border: none;
+  background: #ffffff;
+  color: #057642;
+  border: 1px solid #e0e0e0;
   padding: 0.5rem 1rem;
-  border-radius: 24px;
+  border-radius: 6px;
   font-weight: 500;
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .new-session-btn:hover {
-  background: #046139;
+  background: #f0fdf4;
+  border-color: #057642;
+  box-shadow: 0 2px 8px rgba(5, 118, 66, 0.15);
+  transform: translateY(-1px);
 }
 
 /* API Input Section */
@@ -530,11 +548,11 @@ body {
 }
 
 .actions-section .new-session-btn {
-  background: #057642;
-  color: white;
-  border: none;
+  background: #ffffff;
+  color: #057642;
+  border: 1px solid #e0e0e0;
   padding: 0.75rem 1.5rem;
-  border-radius: 24px;
+  border-radius: 6px;
   font-weight: 600;
   font-size: 0.9rem;
   cursor: pointer;
@@ -542,13 +560,14 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  box-shadow: 0 2px 4px rgba(5, 118, 66, 0.15);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
   width: 100%;
   justify-content: center;
 }
 
 .actions-section .new-session-btn:hover {
-  background: #046139;
+  background: #f0fdf4;
+  border-color: #057642;
   box-shadow: 0 3px 8px rgba(5, 118, 66, 0.25);
   transform: translateY(-1px);
 }
