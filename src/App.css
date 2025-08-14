@@ -645,6 +645,8 @@ body {
   padding: 1rem;
   cursor: pointer;
   transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .history-item:hover {
@@ -662,7 +664,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .history-description {

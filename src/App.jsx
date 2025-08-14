@@ -405,6 +405,7 @@ function App() {
                       </span>
                       <span className="history-time">{item.timestamp}</span>
                     </div>
+                    <div className="history-preview">{item.text}</div>
                   </div>
                 ))}
               </div>
