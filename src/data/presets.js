@@ -4,7 +4,7 @@ export const PRESETS = [
     name: "Add Hook",
     icon: "🎯",
     prompt:
-      "It's the first line you write to grab readers' attention, awaken their curiosity, and motivate them to click “See more.” This can be: Short dialogues (Storytelling works. Always! I often practice this writing trick when crafting texts for personal blogs. It does wonders on social media, too.). Intriguing questions, Weird words, Statistics, Inspirational quotes, Surprising (or extraordinary) insights related to your niche. Unusual or little-known facts, How-to offerings. Make a headline intriguing yet communicating some benefits a user will get after reading it. Avoid long blocks of text. Make your hook easy to scan for users scrolling their LinkedIn newsfeeds.",
+      "It's the first line you write to grab readers' attention, awaken their curiosity, and motivate them to click “See more.” This can be: Short dialogues, intriguing questions, weird words, statistics, inspirational quotes, surprising (or extraordinary) insights related to your niche, unusual or little-known facts, or how-to offerings. Make a headline intriguing yet communicating some benefits a user will get after reading it. Avoid long blocks of text. Make your hook easy to scan for users scrolling their LinkedIn newsfeeds.",
   },
   {
     id: "storytelling",
@@ -16,14 +16,14 @@ export const PRESETS = [
   {
     id: "split",
     name: "Split into Sections",
-    icon: "✂️",
+    icon: "🪓",
     prompt:
       "Add rhythm to the text by splitting it into short sections separated by empty lines so that readers can scan content.",
   },
   {
     id: "simplify",
     name: "Simplify Language",
-    icon: "👶",
+    icon: "🍼",
     prompt:
       "Rewrite the text so a 10-year-old can understand it. Keep the same overall structure, but use simpler words and break up long sentences into shorter ones.",
   },
@@ -37,13 +37,13 @@ export const PRESETS = [
   {
     id: "emojis",
     name: "Add Emojis",
-    icon: "😎",
+    icon: "🤩",
     prompt: "Add appropriate emojis to make the content more engaging.",
   },
   {
     id: "list",
     name: "Add Lists",
-    icon: "📋",
+    icon: "🗂️",
     prompt: "Create structure with one or more lists.",
   },
   {
@@ -56,14 +56,14 @@ export const PRESETS = [
   {
     id: "provocate",
     name: "Make Provocative",
-    icon: "🔥",
+    icon: "⚡",
     prompt:
       "Provocate readers to engage with falsy or bold statement that people have a strong opinion about.",
   },
   {
     id: "creativity",
     name: "Reimagine Post",
-    icon: "🎨",
+    icon: "🌀",
     prompt:
       "Rewrite the text completely with a different angle. Keep the essence but put it in a whole new package that looks very different in all possible ways. Think outside the box. Be 1000x more creative.",
   },
@@ -84,16 +84,16 @@ export const PRESETS = [
   {
     id: "activate",
     name: "Activate Voice",
-    icon: "⚡",
+    icon: "🔊",
     prompt:
       "Replace passive voice and weak adverbs. The more active verbs (with a person in the subject position) in the text, the better.",
   },
   {
     id: "sensory",
     name: "Add Sensory Details",
-    icon: "👁️",
+    icon: "🌈",
     prompt:
-      "Add sensory details such as: Power words. Persuasive and descriptive, they make us feel scared, encouraged, aroused, angry, greedy, safe, or curious. Beneficial adjectives. They explain the “What’s in there for me?” objection to readers and give them a reason to continue investigating your content. Sensory words. These are language items appealing to our five physical senses. Humor can also be a sensory detail.",
+      "Add sensory details such as: Power words, persuasive and descriptive language, beneficial adjectives, sensory words appealing to the five senses, and humor where appropriate.",
   },
   {
     id: "relatable",
@@ -105,7 +105,7 @@ export const PRESETS = [
   {
     id: "curiosity",
     name: "Build Curiosity",
-    icon: "🕵️",
+    icon: "🕵️‍♂️",
     prompt:
       "Tweak the post to leave open loops, ask thought-provoking questions, or tease insights that make people want to read until the end.",
   },
@@ -115,5 +115,89 @@ export const PRESETS = [
     icon: "⚔️",
     prompt:
       "Sharpen the post with a strong, opinionated stance. Draw a clear line in the sand that makes people either agree or disagree passionately.",
+  },
+  {
+    id: "question",
+    name: "Ask a Question",
+    icon: "❓",
+    prompt:
+      "Transform into a short, curiosity-sparking question post. Lead with a single clear question your audience can’t resist answering. Keep it direct, conversational, and easy to respond to.",
+  },
+  {
+    id: "thought_leadership",
+    name: "Share a Bold Opinion",
+    icon: "🔥",
+    prompt:
+      "Transform into a thought-leadership post that challenges conventional wisdom. Open with a strong statement, back it up with your reasoning or experience, and close by inviting others’ perspectives.",
+  },
+  {
+    id: "listicle",
+    name: "Create a Mini List",
+    icon: "📝",
+    prompt:
+      "Transform into a punchy list of 3–10 items. Each point should be easy to scan, offer immediate value, and feel like a quick resource people will want to save and share.",
+  },
+  {
+    id: "short_one_liner",
+    name: "Drop a One-Liner",
+    icon: "💥",
+    prompt:
+      "Transform into a short, striking one-liner post. Keep it under 2 sentences. Make it witty, insightful, or contrarian—something that hooks instantly while scrolling.",
+  },
+  {
+    id: "long_form",
+    name: "Write Long-Form",
+    icon: "📜",
+    prompt:
+      "Transform into a long-form text post with a clear structure. Use short paragraphs, strong section breaks, and a narrative flow that rewards readers who keep scrolling.",
+  },
+  {
+    id: "results",
+    name: "Share Results",
+    icon: "📊",
+    prompt:
+      "Transform into a results breakdown. Share specific numbers, strategies, or outcomes. Explain what was done, what worked, and the key takeaway for others.",
+  },
+  {
+    id: "announcement",
+    name: "Make an Announcement",
+    icon: "📣",
+    prompt:
+      "Transform into a big announcement. Frame the update as exciting news, express gratitude, and invite others to celebrate or engage.",
+  },
+  {
+    id: "life_update",
+    name: "Post a Life Update",
+    icon: "🌱",
+    prompt:
+      "Transform into an authentic, personal update. Share a real story about change, challenge, or growth, written in a relatable and genuine tone.",
+  },
+  {
+    id: "humor",
+    name: "Add Humor",
+    icon: "🤣",
+    prompt:
+      "Transform into a humorous, light-hearted post. Use wit, irony, or a playful observation that your professional audience will relate to.",
+  },
+  {
+    id: "event_recap",
+    name: "Do an Event Recap",
+    icon: "🎟️",
+    prompt:
+      "Transform into a recap of an event, talk, or workshop. Share the most valuable insights, lessons, or memorable moments, and highlight your key takeaways.",
+  },
+  {
+    id: "celebrate",
+    name: "Celebrate a Win",
+    icon: "🥳",
+    prompt:
+      "Transform into a celebratory post about a milestone or achievement. Share the story behind it, give credit where due, and show gratitude to those involved.",
+  },
+  {
+    id: "research",
+    name: "Share Research",
+    icon: "🔬",
+    prompt:
+      "Transform into an insight-driven post. Highlight data, research findings, or survey results, explain their meaning, and invite discussion around the implications.",
   },
 ];
