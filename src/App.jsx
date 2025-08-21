@@ -253,7 +253,7 @@ function App() {
     <div className="app">
       <header className="header">
         <div>
-          <h1>📝 Postify</h1>
+          <h1>Tap</h1>
         </div>
         <div className="api-key-controls">
           <button
@@ -381,7 +381,7 @@ function App() {
           </div>
 
           <div className="history-section">
-            <h3>📝 Post History</h3>
+            <h3>Changes</h3>
             {history.length === 0 ? (
               <p className="empty-history">
                 Start typing to see your change history
@@ -415,7 +415,7 @@ function App() {
 
         <aside className="presets-section">
           <div className="presets-header">
-            <h3>✨ Enhancement Tools</h3>
+            <h3>Enhancement Tools</h3>
             {isProcessing && (
               <div className="processing-indicator-inline">
                 <div className="spinner"></div>
