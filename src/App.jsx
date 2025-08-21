@@ -253,7 +253,7 @@ function App() {
     <div className="app">
       <header className="header">
         <div>
-          <h1>Tap</h1>
+          <h1>🦋 Butterfly</h1>
         </div>
         <div className="api-key-controls">
           <button
