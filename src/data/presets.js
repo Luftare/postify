@@ -21,11 +21,11 @@ export const PRESETS = [
       "Add rhythm to the text by splitting it into short sections separated by empty lines so that reacers can scan content.",
   },
   {
-    id: "fluid",
-    name: "Improve Flow",
-    icon: "🌊",
+    id: "simplify",
+    name: "Simplify Words",
+    icon: "👶",
     prompt:
-      "Improve the text flow so that it forms an easty-to-follow structure.",
+      "Rewrite the text so a 10-year-old can understand it. Keep the same overall structure, but use simpler words and break up long sentences into shorter ones.",
   },
   {
     id: "grammar",
