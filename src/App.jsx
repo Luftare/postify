@@ -429,6 +429,7 @@ function App() {
                 onClick={() => processWithPreset(preset)}
                 disabled={isProcessing || !currentText.trim()}
                 className="preset-btn"
+                title={preset.prompt}
               >
                 <span className="preset-icon">{preset.icon}</span>
                 <span className="preset-name">{preset.name}</span>
@@ -438,6 +439,7 @@ function App() {
               onClick={() => setShowCustomPrompt(true)}
               disabled={isProcessing || !currentText.trim()}
               className="preset-btn custom-preset-btn"
+              title="Create your own custom enhancement prompt"
             >
               <span className="preset-icon">🎨</span>
               <span className="preset-name">Custom</span>
